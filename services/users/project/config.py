@@ -1,21 +1,30 @@
-# services/users/project/config.py
+#Typing imports
+import typing as typ
+
+#External imports
+import os
+
+#Internal Imports
 
 
 class BaseConfig:
     """Base configuration"""
-    TESTING = False
+    TESTING                        = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY                     = 'my_precious'
 
 
 class DevelopmentConfig(BaseConfig):
     """Development configuration"""
-    pass
+    SQLALCHEMY_DATABASE_URI        = os.environ.get('DATABASE_URL')
 
 
 class TestingConfig(BaseConfig):
     """Testing configuration"""
-    TESTING = True
+    TESTING                        = True
+    SQLALCHEMY_DATABASE_URI        = os.environ.get('DATABASE_TEST_URL')
 
 
 class ProductionConfig(BaseConfig):
     """Production configuration"""
-    pass
+    SQLALCHEMY_DATABASE_URI        = os.environ.get('DATABASE_TEST_URL')
