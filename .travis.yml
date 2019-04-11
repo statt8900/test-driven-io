@@ -21,3 +21,4 @@ script:
 
 after_script:
   - docker-compose -f docker-compose-dev.yml down
+  
