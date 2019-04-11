@@ -1,8 +1,6 @@
 # Typing imports
 import typing as typ
 
-if typ.TYPE_CHECKING:
-    from flask import Flask
 # External imports
 from flask_testing import TestCase  # type: ignore
 import unittest
@@ -10,6 +8,8 @@ import unittest
 # Internal Imports
 from project import create_app, db
 
+if typ.TYPE_CHECKING:
+    from flask import Flask
 app = create_app()
 
 

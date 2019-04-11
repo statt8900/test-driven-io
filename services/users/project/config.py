@@ -1,6 +1,3 @@
-# Typing imports
-import typing as typ
-
 # External imports
 import os
 

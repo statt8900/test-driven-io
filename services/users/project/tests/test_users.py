@@ -1,6 +1,3 @@
-# Typing imports
-import typing as typ
-
 # External imports
 import json
 import unittest
@@ -13,6 +10,8 @@ from project.api.models import User
 # ######################
 # # Helper Functions
 # # --------------------
+
+
 def add_user(username: str, email: str) -> User:
     user = User(username=username, email=email)
     db.session.add(user)
@@ -74,7 +73,8 @@ class TestUserService(BaseTestCase):
             )
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 400)
-            self.assertIn("michael@mherman.org already in database", data["message"])
+            self.assertIn("michael@mherman.org already in database",
+                          data["message"])
             self.assertIn("fail", data["status"])
 
     def test_get_user(self) -> None:
@@ -88,14 +88,6 @@ class TestUserService(BaseTestCase):
             self.assertIn("michael@mherman.org", data["data"]["email"])
             self.assertIn("michael", data["data"]["username"])
             self.assertIn("success", data["status"])
-
-    def test_get_user_no_id(self) -> None:
-        with self.client:
-            response = self.client.get("/users/blah")
-            data = json.loads(response.data.decode())
-            self.assertEqual(response.status_code, 404)
-            self.assertIn("fail", data["status"])
-            self.assertIn("User does not exist", data["message"])
 
     def test_get_user_no_id(self) -> None:
         with self.client:

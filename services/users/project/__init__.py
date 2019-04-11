@@ -2,7 +2,7 @@
 import typing as typ
 
 # External imports
-from flask import Flask, jsonify
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy  # type: ignore
 import os
 
