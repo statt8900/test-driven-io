@@ -4,12 +4,12 @@ import typing as typ
 # External imports
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy  # type: ignore
+from flask_debugtoolbar import DebugToolbarExtension  # type: ignore
 import os
 
 # Internal Imports
-
-
-db = SQLAlchemy()  # new
+db = SQLAlchemy()
+toolbar = DebugToolbarExtension()
 
 
 def create_app(script_info: typ.Any = None) -> Flask:
@@ -22,6 +22,7 @@ def create_app(script_info: typ.Any = None) -> Flask:
 
     # set up extensions
     db.init_app(app)
+    toolbar.init_app(app)
 
     # register blueprints
     from .api.users import users_blueprint
