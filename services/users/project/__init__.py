@@ -5,12 +5,13 @@ import typing as typ
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy  # type: ignore
 from flask_debugtoolbar import DebugToolbarExtension  # type: ignore
+from flask_cors import CORS  # type: ignore
 import os
 
 # Internal Imports
 db = SQLAlchemy()
 toolbar = DebugToolbarExtension()
-
+cors = CORS()
 
 def create_app(script_info: typ.Any = None) -> Flask:
     # instantiate the app
@@ -23,6 +24,7 @@ def create_app(script_info: typ.Any = None) -> Flask:
     # set up extensions
     db.init_app(app)
     toolbar.init_app(app)
+    cors.init_app(app)
 
     # register blueprints
     from .api.users import users_blueprint
