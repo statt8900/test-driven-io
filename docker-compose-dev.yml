@@ -32,9 +32,25 @@ services:
   nginx:
     build:
       context: ./services/nginx
-      dockerfile: Dockerfile-prod
+      dockerfile: Dockerfile-dev
     restart: always
     ports:
       - 80:80
     depends_on:
       - users
+      - client
+
+  client:
+      build:
+        context: ./services/client
+        dockerfile: Dockerfile-dev
+      volumes:
+          - './services/client:/usr/src/app'
+          - '/usr/src/app/node_modules'
+      ports:
+        - 3001:3000
+      depends_on:
+        - users
+      environment:
+        - NODE_ENV=development
+        - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
