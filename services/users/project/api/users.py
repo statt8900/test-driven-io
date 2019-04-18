@@ -21,8 +21,10 @@ def index() -> str:
     else:
         username = request.form["username"]
         email = request.form["email"]
-        if username and email:
-            db.session.add(User(username=username, email=email))
+        password = request.form["password"]
+        if username and email and password:
+            db.session.add(
+                User(username=username, email=email, password=password))
             db.session.commit()
             users = User.query.all()
             return render_template("index.html", users=users)
@@ -43,12 +45,14 @@ def add_user() -> typ.Tuple[str, int]:
 
         username = post_data.get("username")
         email = post_data.get("email")
-        if not (username and email):
+        password = post_data.get("password")
+        if not (username and email and password):
             return jsonify(response_obj), 400
         try:
             user = User.query.filter_by(email=email).first()
             if not user:
-                db.session.add(User(username=username, email=email))
+                db.session.add(
+                    User(username=username, email=email, password=password))
                 db.session.commit()
                 response_obj["message"] = f"{email} was added!"
                 response_obj["status"] = " success"

@@ -105,7 +105,7 @@
 <p id="t5" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t6" class="stm mis"><span class="key">class</span> <span class="nam">User</span><span class="op">(</span><span class="nam">db</span><span class="op">.</span><span class="nam">Model</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
 <p id="t7" class="pln"><span class="strut">&nbsp;</span></p>
-<p id="t8" class="stm mis">    <span class="nam">__tablename__</span> <span class="op">=</span> <span class="str">'users'</span><span class="strut">&nbsp;</span></p>
+<p id="t8" class="stm mis">    <span class="nam">__tablename__</span> <span class="op">=</span> <span class="str">"users"</span><span class="strut">&nbsp;</span></p>
 <p id="t9" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t10" class="stm mis">    <span class="nam">id</span> <span class="op">=</span> <span class="nam">db</span><span class="op">.</span><span class="nam">Column</span><span class="op">(</span><span class="nam">db</span><span class="op">.</span><span class="nam">Integer</span><span class="op">,</span> <span class="nam">primary_key</span><span class="op">=</span><span class="key">True</span><span class="op">,</span> <span class="nam">autoincrement</span><span class="op">=</span><span class="key">True</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t11" class="stm mis">    <span class="nam">username</span> <span class="op">=</span> <span class="nam">db</span><span class="op">.</span><span class="nam">Column</span><span class="op">(</span><span class="nam">db</span><span class="op">.</span><span class="nam">String</span><span class="op">(</span><span class="num">128</span><span class="op">)</span><span class="op">,</span> <span class="nam">nullable</span><span class="op">=</span><span class="key">False</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
@@ -113,17 +113,17 @@
 <p id="t13" class="stm mis">    <span class="nam">active</span> <span class="op">=</span> <span class="nam">db</span><span class="op">.</span><span class="nam">Column</span><span class="op">(</span><span class="nam">db</span><span class="op">.</span><span class="nam">Boolean</span><span class="op">(</span><span class="op">)</span><span class="op">,</span> <span class="nam">default</span><span class="op">=</span><span class="key">True</span><span class="op">,</span> <span class="nam">nullable</span><span class="op">=</span><span class="key">False</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t14" class="stm mis">    <span class="nam">created_date</span> <span class="op">=</span> <span class="nam">db</span><span class="op">.</span><span class="nam">Column</span><span class="op">(</span><span class="nam">db</span><span class="op">.</span><span class="nam">DateTime</span><span class="op">,</span> <span class="nam">default</span><span class="op">=</span><span class="nam">func</span><span class="op">.</span><span class="nam">now</span><span class="op">(</span><span class="op">)</span><span class="op">,</span> <span class="nam">nullable</span><span class="op">=</span><span class="key">False</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t15" class="pln"><span class="strut">&nbsp;</span></p>
-<p id="t16" class="stm mis">    <span class="key">def</span> <span class="nam">__init__</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">username</span><span class="op">,</span> <span class="nam">email</span><span class="op">)</span><span class="op">-></span><span class="key">None</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
+<p id="t16" class="stm mis">    <span class="key">def</span> <span class="nam">__init__</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">username</span><span class="op">,</span> <span class="nam">email</span><span class="op">)</span> <span class="op">-></span> <span class="key">None</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
 <p id="t17" class="stm run hide_run">        <span class="nam">self</span><span class="op">.</span><span class="nam">username</span> <span class="op">=</span> <span class="nam">username</span><span class="strut">&nbsp;</span></p>
 <p id="t18" class="stm run hide_run">        <span class="nam">self</span><span class="op">.</span><span class="nam">email</span> <span class="op">=</span> <span class="nam">email</span><span class="strut">&nbsp;</span></p>
 <p id="t19" class="pln"><span class="strut">&nbsp;</span></p>
-<p id="t20" class="stm mis">    <span class="key">def</span> <span class="nam">to_json</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">-></span><span class="nam">dict</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
-<p id="t21" class="stm run hide_run">            <span class="key">return</span> <span class="op">{</span><span class="strut">&nbsp;</span></p>
-<p id="t22" class="pln">                        <span class="str">'id'</span><span class="op">:</span> <span class="nam">self</span><span class="op">.</span><span class="nam">id</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t23" class="pln">                        <span class="str">'username'</span><span class="op">:</span> <span class="nam">self</span><span class="op">.</span><span class="nam">username</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t24" class="pln">                        <span class="str">'email'</span><span class="op">:</span> <span class="nam">self</span><span class="op">.</span><span class="nam">email</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t25" class="pln">                        <span class="str">'active'</span><span class="op">:</span> <span class="nam">self</span><span class="op">.</span><span class="nam">active</span><span class="strut">&nbsp;</span></p>
-<p id="t26" class="pln">                    <span class="op">}</span><span class="strut">&nbsp;</span></p>
+<p id="t20" class="stm mis">    <span class="key">def</span> <span class="nam">to_json</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span> <span class="op">-></span> <span class="nam">dict</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
+<p id="t21" class="stm run hide_run">        <span class="key">return</span> <span class="op">{</span><span class="strut">&nbsp;</span></p>
+<p id="t22" class="pln">            <span class="str">"id"</span><span class="op">:</span> <span class="nam">self</span><span class="op">.</span><span class="nam">id</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t23" class="pln">            <span class="str">"username"</span><span class="op">:</span> <span class="nam">self</span><span class="op">.</span><span class="nam">username</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t24" class="pln">            <span class="str">"email"</span><span class="op">:</span> <span class="nam">self</span><span class="op">.</span><span class="nam">email</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t25" class="pln">            <span class="str">"active"</span><span class="op">:</span> <span class="nam">self</span><span class="op">.</span><span class="nam">active</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t26" class="pln">        <span class="op">}</span><span class="strut">&nbsp;</span></p>
 
             </td>
         </tr>
@@ -134,7 +134,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.5.2</a>,
-            created at 2019-04-11 05:37
+            created at 2019-04-17 22:08
         </p>
     </div>
 </div>

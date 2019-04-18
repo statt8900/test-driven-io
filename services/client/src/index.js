@@ -10,8 +10,9 @@ class App extends Component {
     super(props)
     this.state = {
       users : [],
-      username : '',
-      email: ''
+      username : 'test',
+      email: 'test@test.com',
+      err: {showAlert:false,message:''},
     }
     this.getUsers     = this.getUsers.bind(this)
     this.addUser      = this.addUser.bind(this)
@@ -39,18 +40,18 @@ class App extends Component {
               )
          .then((res)=>{
            this.getUsers()
-           this.setState({ username: '', email: '' });
+           this.setState({ username: '', email: '', err:{showAlert:false,message:''} });
          })
-         .catch((err)=>{console.log(err)})
+         .catch((err)=>{console.log(err.response.data.message);this.setState({err:{showAlert:true,message:err.response.data.message}})})
   }
   render() {
     return (
       <section className="section">
         <div className="container">
-          <div className="columns">
-            <div className="column is-one-third">
+          <div className="row">
+            <div className="col-md-4">
               <br/>
-              <h1 className="title is-1 is-1">All Users</h1>
+              <h1 className="">All Users</h1>
               <hr/><br/>
               <UsersList users={this.state.users} />
               <br/><br/>
@@ -59,6 +60,8 @@ class App extends Component {
                 handleChange={this.handleChange}
                 username={this.state.username}
                 email={this.state.email}
+                showAlert={this.state.err.showAlert}
+                errMessage={this.state.err.message}
               />
             </div>
           </div>

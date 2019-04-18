@@ -7,7 +7,7 @@ const UsersList = (props) => (
         return (
           <h4
             key={user.id}
-            className="box title is-4"
+            className="well"
           >{user.email}
           </h4>
         )

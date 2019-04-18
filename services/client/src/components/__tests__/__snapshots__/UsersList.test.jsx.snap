@@ -3,12 +3,12 @@
 exports[`UsersList renders a snapshot properly 1`] = `
 <div>
   <h4
-    className="box title is-4"
+    className="well"
   >
     hermanmu@gmail.com
   </h4>
   <h4
-    className="box title is-4"
+    className="well"
   >
     michael@mherman.org
   </h4>
