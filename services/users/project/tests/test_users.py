@@ -1,8 +1,8 @@
 # External imports
 import json
 import unittest
-
 # Internal Imports
+from flask import current_app
 from project import db
 from project.tests.base import BaseTestCase
 from project.tests.utils import add_user
@@ -157,6 +157,23 @@ class TestUserService(BaseTestCase):
             self.assertIn(b"All Users", response.data)
             self.assertNotIn(b"<p>No users!</p>", response.data)
             self.assertIn(b"michael", response.data)
+
+    def test_encode_auth_token(self) -> None:
+        user = add_user('justatest', 'test@test.com', 'test')
+        auth_token = user.encode_auth_token(user.id)
+        self.assertTrue(isinstance(auth_token, bytes))
+
+    def test_decode_auth_token(self) -> None:
+        user = add_user('justatest', 'test@test.com', 'test')
+        auth_token = user.encode_auth_token(user.id)
+        self.assertEqual(user.id, user.decode_auth_token(auth_token))
+
+    def test_expired_auth_token(self) -> None:
+        user = add_user('justatest', 'test@test.com', 'test')
+        current_app.config['TOKEN_EXPIRATION_SECONDS'] = -1
+        auth_token = user.encode_auth_token(user.id)
+        self.assertIn('Signature expired. Please log in again.',
+                      user.decode_auth_token(auth_token))
 
 
 if __name__ == "__main__":

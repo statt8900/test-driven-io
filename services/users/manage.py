@@ -39,8 +39,8 @@ def test() -> int:
 @cli.command("seed_db")
 def seed_db_test() -> None:
     """Runs the tests without code coverage"""
-    db.session.add(User(username="mike", email="test@test.com"))
-    db.session.add(User(username="mike", email="test2@test.com"))
+    db.session.add(User(username="mike", email="test@test.com",password="test"))
+    db.session.add(User(username="fred", email="test2@test.com",password="test"))
     db.session.commit()
 
 
