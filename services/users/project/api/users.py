@@ -7,6 +7,7 @@ from sqlalchemy import exc
 
 # Internal Imports
 from project.api.models import User
+from project.api.utils import authenticate, is_admin
 from project import db
 
 response_type = typ.Tuple[str, int]
@@ -36,9 +37,13 @@ def ping_pong() -> str:
 
 
 @users_blueprint.route("/users", methods=("POST", "GET"))
-def add_user() -> typ.Tuple[str, int]:
+@authenticate
+def add_user(resp : int) -> typ.Tuple[str, int]:
     if request.method == "POST":
         response_obj = {"status": "fail", "message": "Invalid payload"}
+        if not is_admin(resp):
+            response_obj['message'] = 'You do not have permission to do that.'
+            return jsonify(response_obj),401
         post_data = request.get_json()
         if not post_data:
             return jsonify(response_obj), 400

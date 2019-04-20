@@ -23,6 +23,7 @@ class TestUsersDBService(BaseTestCase):
         self.assertEqual(user.username, 'test')
         self.assertEqual(user.email, 'test@test.com')
         self.assertTrue(user.active)
+        self.assertFalse(user.admin)
         self.assertTrue(user.password)
 
     def test_add_user_duplicate_username(self) -> None:

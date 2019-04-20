@@ -2,8 +2,11 @@
 
 exports[`AddUser renders a snapshot properly 1`] = `
 <div
-  class="well"
+  className="well"
 >
+  <legend>
+    Add User
+  </legend>
   <form
     onSubmit={[Function]}
   >

@@ -4,7 +4,7 @@ const inputClass = "form-control";
 
 const AddUser = (props) =>{
   return (
-    <div class="well">
+    <div className="well">
       <legend>Add User</legend>
       <form
         onSubmit={(event)=>props.addUser(event)}

@@ -3,9 +3,9 @@ import typing as typ
 # External imports
 from flask import Blueprint, jsonify, request
 from sqlalchemy import exc, or_
-
 # Internal Imports
 from project.api.models import User
+from project.api.utils import authenticate
 from project import db, bcrypt
 
 auth_blueprint = Blueprint('auth', __name__)
@@ -24,13 +24,11 @@ def register_user() -> typ.Tuple[str, typ.Any]:
     username = post_data.get('username')
     email = post_data.get('email')
     password = post_data.get('password')
-
     try:
         # check for existing user
         user = User.query.filter(
             or_(User.username == username, User.email == email)
         ).first()
-
         if not user:
             new_user = User(
                 username=username,
@@ -87,46 +85,22 @@ def login_user() -> typ.Tuple[str, typ.Any]:
         return jsonify(response_obj), 500
 
 
-@auth_blueprint.route('/auth/logout', methods=('POST',))
-def logout_user() -> typ.Tuple[str, typ.Any]:
+@auth_blueprint.route('/auth/logout', methods=('GET',))
+@authenticate
+def logout_user(resp : int) -> typ.Tuple[str, typ.Any]:
     response_object = {
-        'message': 'Invalid payload.',
-        'status': 'fail'
+        'status': 'success',
+        'message': 'Successfully logged out.'
     }
-    auth_header = request.headers.get('Authorization')
-    if auth_header:
-        auth_token = auth_header.split(' ')[-1]
-        resp = User.decode_auth_token(auth_token)
-        if not isinstance(resp, str):
-            response_object['status'] = 'success'
-            response_object['message'] = 'Successfully logged out.'
-            return jsonify(response_object), 200
-        else:
-            response_object['status'] = 'fail'
-            response_object['message'] = resp
-            return jsonify(response_object), 401
-    else:
-        return jsonify(response_object), 403
+    return jsonify(response_object), 200
 
 
 @auth_blueprint.route('/auth/status', methods=('GET',))
-def get_status() -> typ.Tuple[str, typ.Any]:
-    response_object = {
-        'message': 'Invalid payload.',
-        'status': 'fail'
+@authenticate
+def get_status(resp : int) -> typ.Tuple[str, typ.Any]:
+    user = User.query.filter_by(id=resp).first()
+    response_obj = {
+        'data': user.to_json(),
+        'status': 'success'
     }
-    auth_header = request.headers.get('Authorization')
-    if auth_header:
-        auth_token = auth_header.split(' ')[-1]
-        resp = User.decode_auth_token(auth_token)
-        if not isinstance(resp, str):
-            user = User.query.filter_by(id=resp).first()
-            response_object['data'] = user.to_json()
-            response_object['status'] = 'success'
-            return jsonify(response_object), 200
-        else:
-            response_object['status'] = 'fail'
-            response_object['message'] = resp
-            return jsonify(response_object), 401
-    else:
-        return jsonify(response_object), 403
+    return jsonify(response_obj), 200
